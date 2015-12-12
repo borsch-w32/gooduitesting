@@ -26,6 +26,9 @@ public class EmailDrafts extends AbstractPage {
     @FindBy(xpath = ".//*[@id='b-toolbar__right']//span[contains(text(), 'Отправить')]")
     public WebElement send;
 
+    @FindBy(xpath = ".//*[@id='b-compose__sent']//div/span")
+    public WebElement incoming;
+
     EmailDrafts(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(this.webDriver, this);

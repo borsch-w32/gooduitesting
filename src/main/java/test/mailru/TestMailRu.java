@@ -52,8 +52,8 @@ public class TestMailRu {
         personalAccountPage.enterData();
         ComposeEmail composeEmail = new ComposeEmail(webDriver);
         composeEmail.fillInEmailAndSave();
-        String title = webDriver.getTitle();
-        assertEquals(title, newEmailPageTitle, notMatch);
+        String actualNewEmailPageTitle = webDriver.getTitle();
+        assertEquals(actualNewEmailPageTitle, newEmailPageTitle, notMatch);
     }
 
     @Test(testName = "Check last email from drafts")
@@ -70,6 +70,8 @@ public class TestMailRu {
         assertEquals(actDeliverTo, expDeliverTo, notMatch);
         assertEquals(actSubject, expSubject, notMatch);
         emailDrafts.send.click();
+        String actTo = emailDrafts.incoming.getText();
+        assertEquals(actTo,expDeliverTo,notMatch);
     }
 
     @Test(testName = "Check Sent Emails")
