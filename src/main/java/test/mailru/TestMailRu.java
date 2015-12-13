@@ -69,9 +69,11 @@ public class TestMailRu {
         String actSubject = emailDrafts.emailSubject.getAttribute("value");
         assertEquals(actDeliverTo, expDeliverTo, notMatch);
         assertEquals(actSubject, expSubject, notMatch);
+//        String actContent = (String) ((JavascriptExecutor)webDriver).executeScript("tinyMCE.activeEditor.getContent({format : 'html'});");
+//        assertEquals(actContent, "qd", notMatch);
         emailDrafts.send.click();
         String actTo = emailDrafts.incoming.getText();
-        assertEquals(actTo,expDeliverTo,notMatch);
+        assertEquals(actTo, expDeliverTo, notMatch);
     }
 
     @Test(testName = "Check Sent Emails")
