@@ -1,8 +1,10 @@
 package test.mailru;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -25,21 +27,18 @@ public class ComposeEmail extends AbstractPage {
     @FindBy(xpath = ".//*[contains(@id,'ab_compose_subj')]")
     private WebElement subject;
 
-    @FindBy(xpath = ".//*[@id='b-toolbar__right']//div/span[contains(text(),'Сохранить')and parent::div[(contains(@data-name,'saveDraft'))]]")
-    private WebElement save;
-
-
     public ComposeEmail(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(this.webDriver, this);
     }
 
     public ComposeEmail fillInEmailAndSave() throws InterruptedException{
+        Actions action = new Actions(webDriver);
         composeButton.click();
         forWhom.sendKeys(testAddress);
         subject.sendKeys(testSubject);
         ((JavascriptExecutor) webDriver).executeScript("tinyMCE.activeEditor.selection.setContent('Test content message!')");
-        save.click();
+        action.keyDown(Keys.CONTROL).sendKeys(String.valueOf('\u0073')).perform();
         Thread.sleep(sleepTime);
         return PageFactory.initElements(webDriver, ComposeEmail.class);
     }
