@@ -1,7 +1,5 @@
 package test.mailru;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
@@ -15,13 +13,11 @@ import static org.testng.Assert.assertEquals;
  * Educate. Grow. Satan.
  */
 
-public class TestMailRu {
+public class TestEmailOperations {
 
     private WebDriver webDriver;
-    private final String notMatch = "Actual Result does not match expected";
     private final String incomingPageTitle = "Входящие - borsch.w32@mail.ru - Почта Mail.Ru";
-    private final String personalAccountLink = "borsch.w32@mail.ru";
-    private final String newEmailPageTitle = "Новое письмо - borsch.w32@mail.ru - Почта Mail.Ru";
+    private final String notMatch = "Actual Result does not match expected";
     private final String expDeliverTo = "cqi90@mail.ru";
     private final String expSubject = "Test me if you can";
 
@@ -29,32 +25,6 @@ public class TestMailRu {
     public void setUp() {
         webDriver = new FirefoxDriver();
         webDriver.get(PersonalAccountPage.mailUrl);
-    }
-
-    @Test(testName = "Check incoming emails page title")
-    public void testTitle() {
-        PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-        personalAccountPage.enterData();
-        String title = webDriver.getTitle();
-        assertEquals(title, incomingPageTitle, notMatch);
-    }
-
-    @Test(testName = "Check personal mail hyperlink")
-    public void testHyperLink() {
-        PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-        personalAccountPage.enterData();
-        String hyperLink = webDriver.findElement(By.id("PH_user-email")).getText();
-        assertEquals(hyperLink, personalAccountLink, notMatch);
-    }
-
-    @Test(testName = "Check title of the create new email page")
-    public void testNewEmailPageTitle() throws InterruptedException {
-        PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-        personalAccountPage.enterData();
-        ComposeEmail composeEmail = new ComposeEmail(webDriver);
-        composeEmail.fillInEmailAndSave();
-        String actualNewEmailPageTitle = webDriver.getTitle();
-        assertEquals(actualNewEmailPageTitle, newEmailPageTitle, notMatch);
     }
 
     @Test(testName = "Check last email from drafts")
