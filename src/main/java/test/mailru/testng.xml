@@ -3,7 +3,8 @@
 <suite name="Test mail.ru" configfailurepolicy="continue" parallel="tests" thread-count="4">
     <test name="testMailRu">
         <classes>
-            <class name="test.mailru.TestMailRu"/>
+            <class name="test.mailru.TestEmailOperations"/>
+            <class name="test.mailru.TestPageComponents"/>
         </classes>
     </test>
 </suite>

@@ -13,8 +13,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19</version>
                 <configuration>
-                    <parallel>methods</parallel>
-                    <threadCount>4</threadCount>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
@@ -31,7 +29,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.1.1</version>
+            <version>6.9.4</version>
         </dependency>
     </dependencies>
 </project>
