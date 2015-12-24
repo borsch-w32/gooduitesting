@@ -14,8 +14,6 @@ public class LogOff extends AbstractPage {
     @FindBy(xpath = ".//*[@id='PH_logoutLink'][@title='выход']")
     public WebElement exit;
 
-    public String title = webDriver.getTitle();
-
     LogOff(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(this.webDriver, this);

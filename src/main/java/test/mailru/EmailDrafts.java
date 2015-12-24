@@ -14,7 +14,7 @@ public class EmailDrafts extends AbstractPage {
     @FindBy(xpath = ".//*[@id='b-nav_folders']/div/div[3]/a/span")
     public WebElement drafts;
 
-    @FindBy(xpath = ".//*[@id='b-letters']//div[parent::div[contains(@class,'b-datalist__body')]][1]")
+    @FindBy(xpath = ".//*[@id='b-letters']//div[parent::div[contains(@class,'b-datalist__body')]][1]//a")
     public WebElement lastEmail;
 
     @FindBy(xpath = ".//*[@id='compose__header__content']//span[contains(@class, 'compose__labels__label__text js-label-text') and parent::span[not(contains(@style,'none'))]][contains(text(),'cqi90@mail.ru')]")

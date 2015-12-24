@@ -1,6 +1,7 @@
 package test.mailru;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
@@ -69,7 +70,7 @@ public class TestMailRu {
         String actSubject = emailDrafts.emailSubject.getAttribute("value");
         assertEquals(actDeliverTo, expDeliverTo, notMatch);
         assertEquals(actSubject, expSubject, notMatch);
-//        String actContent = (String) ((JavascriptExecutor)webDriver).executeScript("tinyMCE.activeEditor.getContent({format : 'html'});");
+//        String actContent = (String) ((JavascriptExecutor)webDriver).executeScript("tinyMCE.activeEditor.getContent();");
 //        assertEquals(actContent, "qd", notMatch);
         emailDrafts.send.click();
         String actTo = emailDrafts.incoming.getText();
