@@ -1,7 +1,9 @@
 package test.mailru;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -34,14 +36,15 @@ public class TestEmailOperations {
         ComposeEmail composeEmail = new ComposeEmail(webDriver);
         composeEmail.fillInEmailAndSave();
         EmailDrafts emailDrafts = new EmailDrafts(webDriver);
-        emailDrafts.drafts.click();
+        Actions clickDrafts = new Actions(webDriver);
+        clickDrafts.moveToElement(emailDrafts.drafts).click().build().perform();
         emailDrafts.lastEmail.click();
         String actDeliverTo = emailDrafts.emailRecepient.getText();
         String actSubject = emailDrafts.emailSubject.getAttribute("value");
         assertEquals(actDeliverTo, expDeliverTo, notMatch);
         assertEquals(actSubject, expSubject, notMatch);
-//        String actContent = (String) ((JavascriptExecutor)webDriver).executeScript("tinyMCE.activeEditor.getContent();");
-//        assertEquals(actContent, "qd", notMatch);
+        String actContent = (String) ((JavascriptExecutor)webDriver).executeScript("tinyMCE.activeEditor.getContent();");
+        assertEquals(actContent, "qd", notMatch);
         emailDrafts.send.click();
         String actTo = emailDrafts.incoming.getText();
         assertEquals(actTo, expDeliverTo, notMatch);
