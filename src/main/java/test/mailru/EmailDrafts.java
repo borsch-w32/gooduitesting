@@ -11,7 +11,11 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class EmailDrafts extends AbstractPage {
 
-    @FindBy(xpath = ".//*[@id='b-nav_folders']/div/div[3]/a/span")
+
+//    @FindBy(xpath = ".//*[@id='b-nav_folders']/div/div[3]/a/span")
+//    public WebElement drafts;
+
+    @FindBy(xpath = ".//*[@id='b-toolbar__right']//div/a[contains(@href, '/messages/drafts')][contains(@rel, 'history')][contains(@class, 'toolbar__message_info__link')]")
     public WebElement drafts;
 
     @FindBy(xpath = ".//*[@id='b-letters']//div[parent::div[contains(@class,'b-datalist__body')]][1]//a")

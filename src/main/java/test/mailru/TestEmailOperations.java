@@ -26,6 +26,7 @@ public class TestEmailOperations {
     @BeforeMethod(description = "Open new page")
     public void setUp() {
         webDriver = new FirefoxDriver();
+        webDriver.manage().window().maximize();
         webDriver.get(PersonalAccountPage.mailUrl);
     }
 
@@ -37,6 +38,7 @@ public class TestEmailOperations {
         composeEmail.fillInEmailAndSave();
         EmailDrafts emailDrafts = new EmailDrafts(webDriver);
         Actions clickDrafts = new Actions(webDriver);
+        ElementHighlighter.highlightElem(webDriver, emailDrafts.drafts);
         clickDrafts.moveToElement(emailDrafts.drafts).click().build().perform();
         emailDrafts.lastEmail.click();
         String actDeliverTo = emailDrafts.emailRecepient.getText();
