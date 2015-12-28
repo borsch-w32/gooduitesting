@@ -1,11 +1,16 @@
 package test.mailru;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.testng.Assert.assertEquals;
 
@@ -22,9 +27,14 @@ public class TestPageComponents {
     private WebDriver webDriver;
 
     @BeforeMethod(description = "Open new page")
-    public void setUp() {
-        webDriver = new FirefoxDriver();
+    public void setUp() throws MalformedURLException{
+        DesiredCapabilities capability = DesiredCapabilities.firefox();
+        capability.setBrowserName("firefox");
+        capability.setVersion("43.0");
+        capability.setPlatform(Platform.LINUX);
+        webDriver = new RemoteWebDriver(new URL("http://192.168.10.4:4444/wd/hub"), capability);
         webDriver.get(PersonalAccountPage.mailUrl);
+
     }
 
     @Test(testName = "Check incoming emails page title")

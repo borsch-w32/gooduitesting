@@ -1,12 +1,17 @@
 package test.mailru;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.testng.Assert.assertEquals;
 
@@ -24,9 +29,12 @@ public class TestEmailOperations {
     private final String expSubject = "Test me if you can";
 
     @BeforeMethod(description = "Open new page")
-    public void setUp() {
-        webDriver = new FirefoxDriver();
-        webDriver.manage().window().maximize();
+    public void setUp() throws MalformedURLException{
+        DesiredCapabilities capability = DesiredCapabilities.firefox();
+        capability.setPlatform(Platform.LINUX);
+        capability.setBrowserName("firefox");
+        capability.setVersion("43.0");
+        webDriver = new RemoteWebDriver(new URL("http://192.168.10.4:4444/wd/hub"), capability);
         webDriver.get(PersonalAccountPage.mailUrl);
     }
 
