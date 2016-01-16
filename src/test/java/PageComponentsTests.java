@@ -1,5 +1,6 @@
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
@@ -8,8 +9,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.mail.pages.ComposeEmailPage;
 import ru.mail.pages.PersonalAccountPage;
+import ru.mail.utils.TakeScreenshotOnFailure;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -68,9 +69,8 @@ public class PageComponentsTests
     {
         if (testResult.getStatus() == ITestResult.FAILURE)
         {
-            System.out.println(testResult.getStatus());
-            File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File("/home/cqi/Documents"));
+            TakeScreenshotOnFailure.takeScreenshot(webDriver);
+            webDriver.close();
         }
     }
 }

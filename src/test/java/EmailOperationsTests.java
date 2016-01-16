@@ -1,15 +1,17 @@
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.mail.pages.*;
 import ru.mail.utils.ElementHighlighter;
+import ru.mail.utils.TakeScreenshotOnFailure;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -22,10 +24,6 @@ import static org.testng.Assert.assertEquals;
 public class EmailOperationsTests
 {
     private WebDriver webDriver;
-    private final String incomingPageTitle = "Входящие - borsch.w32@mail.ru - Почта Mail.Ru";
-    private final String notMatch = "Actual Result does not match expected";
-    private final String expDeliverTo = "cqi90@mail.ru";
-    private final String expSubject = "Test me if you can";
 
     @BeforeClass(description = "Open new page")
     public void setUp() throws MalformedURLException
@@ -46,19 +44,20 @@ public class EmailOperationsTests
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
         composeEmailPage.fillInEmailAndSave();
         EmailDraftsPage emailDraftsPage = new EmailDraftsPage(webDriver);
+
         Actions clickDrafts = new Actions(webDriver);
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
         clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
+
         emailDraftsPage.lastEmail.click();
         String actDeliverTo = emailDraftsPage.emailRecepient.getText();
         String actSubject = emailDraftsPage.emailSubject.getAttribute("value");
-        assertEquals(actDeliverTo, expDeliverTo, notMatch);
-        assertEquals(actSubject, expSubject, notMatch);
-        String actContent = (String) ((JavascriptExecutor) webDriver).executeScript("tinyMCE.activeEditor.getContent();");
-        assertEquals(actContent, "qd", notMatch);
+        assertEquals(actDeliverTo, "cqi90@mail.ru");
+        assertEquals(actSubject, "Test me if you can");
+
         emailDraftsPage.send.click();
         String actTo = emailDraftsPage.incoming.getText();
-        assertEquals(actTo, expDeliverTo, notMatch);
+        assertEquals(actTo, "cqi90@mail.ru");
     }
 
     @Test(testName = "Check Sent Emails")
@@ -68,7 +67,7 @@ public class EmailOperationsTests
         personalAccountPage.enterData();
         SentEmailsPage sentEmailsPage = new SentEmailsPage(webDriver);
         sentEmailsPage.sent.click();
-        assertEquals(sentEmailsPage.title, incomingPageTitle, notMatch);
+        assertEquals(sentEmailsPage.title, "Входящие - borsch.w32@mail.ru - Почта Mail.Ru");
     }
 
     @Test(testName = "Log Off")
@@ -77,13 +76,17 @@ public class EmailOperationsTests
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
         LogOffPage logOffPage = new LogOffPage(webDriver);
-        assertEquals(logOffPage.exit.getAttribute("text"), "выход", notMatch);
+        assertEquals(logOffPage.exit.getAttribute("text"), "выход");
         logOffPage.exit.click();
     }
 
-    @AfterMethod(description = "Shutdown page")
-    public void shutDown()
+    @AfterMethod(description = "Take screenshot on fail")
+    public void takeScreenShotOnFailure(ITestResult testResult) throws IOException
     {
-        webDriver.quit();
+        if (testResult.getStatus() == ITestResult.FAILURE)
+        {
+            TakeScreenshotOnFailure.takeScreenshot(webDriver);
+            webDriver.close();
+        }
     }
 }
