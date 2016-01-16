@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import ru.mail.pages.AbstractPage;
 
 /**
  * Created by cqi on 12.12.15. Educate. Grow. Satan.
@@ -29,7 +28,7 @@ public class EmailDraftsPage extends AbstractPage
     @FindBy(xpath = ".//*[@id='b-compose__sent']//div/span")
     public WebElement incoming;
 
-    EmailDraftsPage(WebDriver webDriver)
+    public EmailDraftsPage(WebDriver webDriver)
     {
         super(webDriver);
         PageFactory.initElements(this.webDriver, this);

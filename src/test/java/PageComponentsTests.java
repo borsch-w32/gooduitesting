@@ -1,14 +1,16 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.mail.pages.ComposeEmailPage;
 import ru.mail.pages.PersonalAccountPage;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -19,10 +21,6 @@ import static org.testng.Assert.assertEquals;
  */
 public class PageComponentsTests
 {
-    private final String incomingPageTitle = "Входящие - borsch.w32@mail.ru - Почта Mail.Ru";
-    private final String notMatch = "Actual Result does not match expected";
-    private final String personalAccountLink = "borsch.w32@mail.ru";
-    private final String newEmailPageTitle = "Новое письмо - borsch.w32@mail.ru - Почта Mail.Ru";
     private WebDriver webDriver;
 
     @BeforeMethod(description = "Open new page")
@@ -42,7 +40,7 @@ public class PageComponentsTests
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
         String title = webDriver.getTitle();
-        assertEquals(title, incomingPageTitle, notMatch);
+        assertEquals(title, "Входящие - borsch.w32@mail.ru - Почта Mail.Ru");
     }
 
     @Test(testName = "Check personal mail hyperlink")
@@ -51,7 +49,7 @@ public class PageComponentsTests
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
         String hyperLink = webDriver.findElement(By.id("PH_user-email")).getText();
-        assertEquals(hyperLink, personalAccountLink, notMatch);
+        assertEquals(hyperLink, "borsch.w32@mail.ru");
     }
 
     @Test(testName = "Check title of the create new email page")
@@ -62,12 +60,17 @@ public class PageComponentsTests
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
         composeEmailPage.fillInEmailAndSave();
         String actualNewEmailPageTitle = webDriver.getTitle();
-        assertEquals(actualNewEmailPageTitle, newEmailPageTitle, notMatch);
+        assertEquals(actualNewEmailPageTitle, "Новое письмо - borsch.w32@mail.ru - Почта Mail.Ru");
     }
 
-    @AfterMethod(description = "Shutdown page")
-    public void shutDown()
+    @AfterMethod(description = "Take screenshot on fail")
+    public void takeScreenShotOnFailure(ITestResult testResult) throws IOException
     {
-        webDriver.quit();
+        if (testResult.getStatus() == ITestResult.FAILURE)
+        {
+            System.out.println(testResult.getStatus());
+            File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(scrFile, new File("/home/cqi/Documents"));
+        }
     }
 }

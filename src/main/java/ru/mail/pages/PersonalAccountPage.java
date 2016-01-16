@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class PersonalAccountPage extends AbstractPage
 {
-    private static final String mailUrl = "https://www.mail.ru";
+    public static final String mailUrl = "https://www.mail.ru";
     private static final String log = "borsch.w32";
     private static final String password = "55tnxadmin";
 
