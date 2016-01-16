@@ -1,20 +1,16 @@
-package test.mailru;
+package ru.mail.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.mail.pages.AbstractPage;
 
 /**
- * Created by cqi on 12.12.15.
- * Educate. Grow. Satan.
+ * Created by cqi on 12.12.15. Educate. Grow. Satan.
  */
-public class EmailDrafts extends AbstractPage {
-
-
-//    @FindBy(xpath = ".//*[@id='b-nav_folders']/div/div[3]/a/span")
-//    public WebElement drafts;
-
+public class EmailDraftsPage extends AbstractPage
+{
     @FindBy(xpath = ".//*[@id='b-toolbar__right']//div/a[contains(@href, '/messages/drafts')][contains(@rel, 'history')][contains(@class, 'toolbar__message_info__link')]")
     public WebElement drafts;
 
@@ -33,7 +29,8 @@ public class EmailDrafts extends AbstractPage {
     @FindBy(xpath = ".//*[@id='b-compose__sent']//div/span")
     public WebElement incoming;
 
-    EmailDrafts(WebDriver webDriver) {
+    EmailDraftsPage(WebDriver webDriver)
+    {
         super(webDriver);
         PageFactory.initElements(this.webDriver, this);
     }

@@ -1,5 +1,3 @@
-package test.mailru;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -7,8 +5,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.mail.pages.*;
+import ru.mail.utils.ElementHighlighter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,20 +16,20 @@ import java.net.URL;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Created by cqi on 11.12.15.
- * Educate. Grow. Satan.
+ * Created by cqi on 11.12.15. Educate. Grow. Satan.
  */
 
-public class TestEmailOperations {
-
+public class EmailOperationsTests
+{
     private WebDriver webDriver;
     private final String incomingPageTitle = "Входящие - borsch.w32@mail.ru - Почта Mail.Ru";
     private final String notMatch = "Actual Result does not match expected";
     private final String expDeliverTo = "cqi90@mail.ru";
     private final String expSubject = "Test me if you can";
 
-    @BeforeMethod(description = "Open new page")
-    public void setUp() throws MalformedURLException{
+    @BeforeClass(description = "Open new page")
+    public void setUp() throws MalformedURLException
+    {
         DesiredCapabilities capability = DesiredCapabilities.firefox();
         capability.setPlatform(Platform.LINUX);
         capability.setBrowserName("firefox");
@@ -39,48 +39,51 @@ public class TestEmailOperations {
     }
 
     @Test(testName = "Check last email from drafts")
-    public void testLastEmailInDrafts() throws InterruptedException {
+    public void testLastEmailInDrafts() throws InterruptedException
+    {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
-        ComposeEmail composeEmail = new ComposeEmail(webDriver);
-        composeEmail.fillInEmailAndSave();
-        EmailDrafts emailDrafts = new EmailDrafts(webDriver);
+        ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
+        composeEmailPage.fillInEmailAndSave();
+        EmailDraftsPage emailDraftsPage = new EmailDraftsPage(webDriver);
         Actions clickDrafts = new Actions(webDriver);
-        ElementHighlighter.highlightElem(webDriver, emailDrafts.drafts);
-        clickDrafts.moveToElement(emailDrafts.drafts).click().build().perform();
-        emailDrafts.lastEmail.click();
-        String actDeliverTo = emailDrafts.emailRecepient.getText();
-        String actSubject = emailDrafts.emailSubject.getAttribute("value");
+        ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
+        clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
+        emailDraftsPage.lastEmail.click();
+        String actDeliverTo = emailDraftsPage.emailRecepient.getText();
+        String actSubject = emailDraftsPage.emailSubject.getAttribute("value");
         assertEquals(actDeliverTo, expDeliverTo, notMatch);
         assertEquals(actSubject, expSubject, notMatch);
-        String actContent = (String) ((JavascriptExecutor)webDriver).executeScript("tinyMCE.activeEditor.getContent();");
+        String actContent = (String) ((JavascriptExecutor) webDriver).executeScript("tinyMCE.activeEditor.getContent();");
         assertEquals(actContent, "qd", notMatch);
-        emailDrafts.send.click();
-        String actTo = emailDrafts.incoming.getText();
+        emailDraftsPage.send.click();
+        String actTo = emailDraftsPage.incoming.getText();
         assertEquals(actTo, expDeliverTo, notMatch);
     }
 
     @Test(testName = "Check Sent Emails")
-    public void testSentEmailsFolder() {
+    public void testSentEmailsFolder()
+    {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
-        SentEmails sentEmails = new SentEmails(webDriver);
-        sentEmails.sent.click();
-        assertEquals(sentEmails.title, incomingPageTitle, notMatch);
+        SentEmailsPage sentEmailsPage = new SentEmailsPage(webDriver);
+        sentEmailsPage.sent.click();
+        assertEquals(sentEmailsPage.title, incomingPageTitle, notMatch);
     }
 
     @Test(testName = "Log Off")
-    public void logOffFromAccount() {
+    public void logOffFromAccount()
+    {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
-        LogOff logOff = new LogOff(webDriver);
-        assertEquals(logOff.exit.getAttribute("text"), "выход", notMatch);
-        logOff.exit.click();
+        LogOffPage logOffPage = new LogOffPage(webDriver);
+        assertEquals(logOffPage.exit.getAttribute("text"), "выход", notMatch);
+        logOffPage.exit.click();
     }
 
     @AfterMethod(description = "Shutdown page")
-    public void shutDown() {
+    public void shutDown()
+    {
         webDriver.quit();
-
     }
 }
