@@ -1,3 +1,5 @@
+package ru.mail.tests;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
