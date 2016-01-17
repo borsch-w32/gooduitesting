@@ -11,9 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Created by cqi on 12.12.15. Educate. Grow. Satan.
  */
 public class ComposeEmailPage extends AbstractPage {
-    public static final String testAddress = "cqi90@mail.ru";
-    String testSubject = "Test me if you can";
-    int sleepTime = 1500;
+    private static final String testAddress = "cqi90@mail.ru";
+    private static final String testSubject = "Test me if you can";
 
     @FindBy(xpath = ".//*[@id='b-toolbar__left']//div/a/span[contains(text(), 'Написать письмо')]")
     private WebElement composeButton;
@@ -38,7 +37,7 @@ public class ComposeEmailPage extends AbstractPage {
         subject.sendKeys(testSubject);
         ((JavascriptExecutor) webDriver).executeScript("tinyMCE.activeEditor.selection.setContent('Test content message!')");
         action.keyDown(Keys.CONTROL).sendKeys(String.valueOf('\u0073')).perform();
-        Thread.sleep(sleepTime);
+        Thread.sleep(1500);
         return PageFactory.initElements(webDriver, ComposeEmailPage.class);
     }
 }
