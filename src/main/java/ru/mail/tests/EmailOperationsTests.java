@@ -56,7 +56,7 @@ public class EmailOperationsTests
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
         clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
         webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.PAGE_DOWN);
-        WebElement draftsHyperlink = (new WebDriverWait(webDriver, 15))
+        WebElement draftsHyperlink = (new WebDriverWait(webDriver, 10))
                 .until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath(".//*[@id='b-nav_folders']//div/a/span[contains(text(), 'Черновики')]")));
         emailDraftsPage.lastEmail.click();
