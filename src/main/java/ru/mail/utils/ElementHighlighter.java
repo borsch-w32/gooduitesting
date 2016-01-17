@@ -21,7 +21,7 @@ public class ElementHighlighter extends AbstractPage
         js.executeScript("arguments[0].setAttribute('style','border: solid 2px red')", element);
         try
         {
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         }
         catch (InterruptedException e)
         {

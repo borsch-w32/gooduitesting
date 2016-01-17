@@ -1,8 +1,11 @@
-import org.openqa.selenium.Platform;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -13,7 +16,6 @@ import ru.mail.utils.TakeScreenshotOnFailure;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import static org.testng.Assert.assertEquals;
 
@@ -28,11 +30,14 @@ public class EmailOperationsTests
     @BeforeClass(description = "Open new page")
     public void setUp() throws MalformedURLException
     {
-        DesiredCapabilities capability = DesiredCapabilities.firefox();
-        capability.setPlatform(Platform.LINUX);
-        capability.setBrowserName("firefox");
-        capability.setVersion("43.0");
-        webDriver = new RemoteWebDriver(new URL("http://192.168.10.4:4444/wd/hub"), capability);
+//        uncomment the lines below to run tests in GRID
+//        DesiredCapabilities capability = DesiredCapabilities.firefox();
+//        capability.setPlatform(Platform.LINUX);
+//        capability.setBrowserName("firefox");
+//        capability.setVersion("43.0");
+//        webDriver = new RemoteWebDriver(new URL("http://192.168.10.4:4444/wd/hub"), capability);
+//        webDriver.get(PersonalAccountPage.mailUrl);
+        webDriver = new FirefoxDriver();
         webDriver.get(PersonalAccountPage.mailUrl);
     }
 
@@ -48,6 +53,9 @@ public class EmailOperationsTests
         Actions clickDrafts = new Actions(webDriver);
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
         clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
+        webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.PAGE_DOWN);
+        WebElement draftsHyperlink = (new WebDriverWait(webDriver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='b-nav_folders']//div/a/span[contains(text(), 'Черновики')]")));
 
         emailDraftsPage.lastEmail.click();
         String actDeliverTo = emailDraftsPage.emailRecepient.getText();
@@ -86,7 +94,6 @@ public class EmailOperationsTests
         if (testResult.getStatus() == ITestResult.FAILURE)
         {
             TakeScreenshotOnFailure.takeScreenshot(webDriver);
-            webDriver.close();
         }
     }
 }

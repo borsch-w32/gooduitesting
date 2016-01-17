@@ -1,23 +1,21 @@
 package ru.mail.pages;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by cqi on 12.12.15. Educate. Grow. Satan.
  */
-public class ComposeEmailPage extends AbstractPage
-{
+public class ComposeEmailPage extends AbstractPage {
     public static final String testAddress = "cqi90@mail.ru";
     String testSubject = "Test me if you can";
     int sleepTime = 1500;
 
-    @FindBy(xpath = ".//*[@id='b-toolbar__left']//div/div[2]/div/a/span")
+    @FindBy(xpath = ".//*[@id='b-toolbar__left']//div/a/span[contains(text(), 'Написать письмо')]")
     private WebElement composeButton;
 
     @FindBy(xpath = ".//*[@id='compose__header__content']//div/textarea[2][@data-original-name='To']")
@@ -26,15 +24,15 @@ public class ComposeEmailPage extends AbstractPage
     @FindBy(xpath = ".//*[contains(@id,'ab_compose_subj')]")
     private WebElement subject;
 
-    public ComposeEmailPage(WebDriver webDriver)
-    {
+    public ComposeEmailPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(this.webDriver, this);
     }
 
-    public ComposeEmailPage fillInEmailAndSave() throws InterruptedException
-    {
+    public ComposeEmailPage fillInEmailAndSave() throws InterruptedException {
         Actions action = new Actions(webDriver);
+        WebElement composeEmailButton = (new WebDriverWait(webDriver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='b-toolbar__left']//div/a/span[contains(text(), 'Написать письмо')]")));
         composeButton.click();
         forWhom.sendKeys(testAddress);
         subject.sendKeys(testSubject);
