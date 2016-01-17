@@ -1,21 +1,21 @@
 package ru.mail.tests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.mail.pages.ComposeEmailPage;
 import ru.mail.pages.PersonalAccountPage;
 import ru.mail.utils.TakeScreenshotOnFailure;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import static org.testng.Assert.assertEquals;
 
@@ -29,11 +29,15 @@ public class PageComponentsTests
     @BeforeMethod(description = "Open new page")
     public void setUp() throws MalformedURLException
     {
-        DesiredCapabilities capability = DesiredCapabilities.firefox();
-        capability.setBrowserName("firefox");
-        capability.setVersion("43.0");
-        capability.setPlatform(Platform.LINUX);
-        webDriver = new RemoteWebDriver(new URL("http://192.168.10.4:4444/wd/hub"), capability);
+        // uncomment the lines below to run tests in GRID
+        // DesiredCapabilities capability = DesiredCapabilities.firefox();
+        // capability.setBrowserName("firefox");
+        // capability.setVersion("43.0");
+        // capability.setPlatform(Platform.LINUX);
+        // webDriver = new RemoteWebDriver(new
+        // URL("http://192.168.10.4:4444/wd/hub"), capability);
+        // webDriver.get(PersonalAccountPage.mailUrl);
+        webDriver = new FirefoxDriver();
         webDriver.get(PersonalAccountPage.mailUrl);
     }
 
@@ -51,6 +55,8 @@ public class PageComponentsTests
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
+        WebElement userEmailHyperlink = (new WebDriverWait(webDriver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("PH_user-email")));
         String hyperLink = webDriver.findElement(By.id("PH_user-email")).getText();
         assertEquals(hyperLink, "borsch.w32@mail.ru");
     }
@@ -58,15 +64,12 @@ public class PageComponentsTests
     @Test(testName = "Check title of the create new email page")
     public void testNewEmailPageTitle() throws InterruptedException
     {
-//        uncomment the lines below to run tests in GRID
-//        PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-//        personalAccountPage.enterData();
-//        ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
-//        composeEmailPage.fillInEmailAndSave();
-//        String actualNewEmailPageTitle = webDriver.getTitle();
-//        assertEquals(actualNewEmailPageTitle, "Новое письмо - borsch.w32@mail.ru - Почта Mail.Ru");
-        webDriver = new FirefoxDriver();
-        webDriver.get(PersonalAccountPage.mailUrl);
+        PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
+        personalAccountPage.enterData();
+        ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
+        composeEmailPage.fillInEmailAndSave();
+        String actualNewEmailPageTitle = webDriver.getTitle();
+        assertEquals(actualNewEmailPageTitle, "Новое письмо - borsch.w32@mail.ru - Почта Mail.Ru");
     }
 
     @AfterMethod(description = "Take screenshot on fail")
@@ -75,7 +78,12 @@ public class PageComponentsTests
         if (testResult.getStatus() == ITestResult.FAILURE)
         {
             TakeScreenshotOnFailure.takeScreenshot(webDriver);
-            webDriver.close();
         }
+    }
+
+    @AfterMethod(description = "Close FF Instance")
+    public void tearDown()
+    {
+        webDriver.quit();
     }
 }

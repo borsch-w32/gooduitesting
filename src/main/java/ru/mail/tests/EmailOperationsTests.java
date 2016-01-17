@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.mail.pages.*;
 import ru.mail.utils.ElementHighlighter;
@@ -29,21 +29,22 @@ public class EmailOperationsTests
 {
     private WebDriver webDriver;
 
-    @BeforeClass(description = "Open new page")
+    @BeforeMethod(description = "Open new page")
     public void setUp() throws MalformedURLException
     {
-//        uncomment the lines below to run tests in GRID
-//        DesiredCapabilities capability = DesiredCapabilities.firefox();
-//        capability.setPlatform(Platform.LINUX);
-//        capability.setBrowserName("firefox");
-//        capability.setVersion("43.0");
-//        webDriver = new RemoteWebDriver(new URL("http://192.168.10.4:4444/wd/hub"), capability);
-//        webDriver.get(PersonalAccountPage.mailUrl);
+        // uncomment the lines below to run tests in GRID
+        // DesiredCapabilities capability = DesiredCapabilities.firefox();
+        // capability.setPlatform(Platform.LINUX);
+        // capability.setBrowserName("firefox");
+        // capability.setVersion("43.0");
+        // webDriver = new RemoteWebDriver(new
+        // URL("http://192.168.10.4:4444/wd/hub"), capability);
+        // webDriver.get(PersonalAccountPage.mailUrl);
         webDriver = new FirefoxDriver();
         webDriver.get(PersonalAccountPage.mailUrl);
     }
 
-    @Test(testName = "Check last email from drafts")
+    @Test(testName = "Check last email from drafts", priority = 1)
     public void testLastEmailInDrafts() throws InterruptedException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
@@ -51,26 +52,22 @@ public class EmailOperationsTests
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
         composeEmailPage.fillInEmailAndSave();
         EmailDraftsPage emailDraftsPage = new EmailDraftsPage(webDriver);
-
         Actions clickDrafts = new Actions(webDriver);
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
         clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
         webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.PAGE_DOWN);
-        WebElement draftsHyperlink = (new WebDriverWait(webDriver, 10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='b-nav_folders']//div/a/span[contains(text(), 'Черновики')]")));
-
+        WebElement draftsHyperlink = (new WebDriverWait(webDriver, 15))
+                .until(ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath(".//*[@id='b-nav_folders']//div/a/span[contains(text(), 'Черновики')]")));
         emailDraftsPage.lastEmail.click();
-        String actDeliverTo = emailDraftsPage.emailRecepient.getText();
-        String actSubject = emailDraftsPage.emailSubject.getAttribute("value");
-        assertEquals(actDeliverTo, "cqi90@mail.ru");
-        assertEquals(actSubject, "Test me if you can");
-
+        String actualDeliverTo = emailDraftsPage.emailRecepient.getText();
+        String actualSubject = emailDraftsPage.emailSubject.getAttribute("value");
+        assertEquals(actualDeliverTo, "cqi90@mail.ru");
+        assertEquals(actualSubject, "Test me if you can");
         emailDraftsPage.send.click();
-        String actTo = emailDraftsPage.incoming.getText();
-        assertEquals(actTo, "cqi90@mail.ru");
     }
 
-    @Test(testName = "Check Sent Emails")
+    @Test(testName = "Check Sent Emails", priority = 2)
     public void testSentEmailsFolder()
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
@@ -80,11 +77,13 @@ public class EmailOperationsTests
         assertEquals(sentEmailsPage.title, "Входящие - borsch.w32@mail.ru - Почта Mail.Ru");
     }
 
-    @Test(testName = "Log Off")
+    @Test(testName = "Log Off", priority = 3)
     public void logOffFromAccount()
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
+        WebElement logOffHyperLink = (new WebDriverWait(webDriver, 10)).until(
+                ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='PH_logoutLink'][@title='выход']")));
         LogOffPage logOffPage = new LogOffPage(webDriver);
         assertEquals(logOffPage.exit.getAttribute("text"), "выход");
         logOffPage.exit.click();
@@ -97,6 +96,11 @@ public class EmailOperationsTests
         {
             TakeScreenshotOnFailure.takeScreenshot(webDriver);
         }
-        webDriver.close();
+    }
+
+    @AfterMethod(description = "Close FF Instance")
+    public void tearDown()
+    {
+        webDriver.quit();
     }
 }
