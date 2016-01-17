@@ -3,8 +3,8 @@
 <suite name="Test mail.ru">
     <test name="testMailRu">
         <classes>
-            <class name="EmailOperationsTests"/>
-            <class name="PageComponentsTests"/>
+            <class name="ru.mail.tests.EmailOperationsTests"/>
+            <class name="ru.mail.tests.PageComponentsTests"/>
         </classes>
     </test>
 </suite>
