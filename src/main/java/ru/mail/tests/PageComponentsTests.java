@@ -75,6 +75,7 @@ public class PageComponentsTests
         if (testResult.getStatus() == ITestResult.FAILURE)
         {
             TakeScreenshotOnFailure.takeScreenshot(webDriver);
+            webDriver.close();
         }
     }
 }
