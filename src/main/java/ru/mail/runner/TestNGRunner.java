@@ -1,12 +1,12 @@
 package ru.mail.runner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by cqi on 17.1.16. Educate. Grow. Satan.
