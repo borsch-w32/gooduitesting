@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.mail.pages.ComposeEmailPage;
 import ru.mail.pages.PersonalAccountPage;
+import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TakeScreenshotOnFailure;
 
 import java.io.IOException;
@@ -27,8 +28,9 @@ public class PageComponentsTests
     private WebDriver webDriver;
 
     @BeforeMethod(description = "Open new page")
-    public void setUp() throws MalformedURLException
+    public void setUp() throws MalformedURLException,IOException
     {
+        PropertiesParser propertiesParser = new PropertiesParser();
         // uncomment the lines below to run tests in GRID
         // DesiredCapabilities capability = DesiredCapabilities.firefox();
         // capability.setBrowserName("firefox");
@@ -38,7 +40,7 @@ public class PageComponentsTests
         // URL("http://192.168.10.4:4444/wd/hub"), capability);
         // webDriver.get(PersonalAccountPage.mailUrl);
         webDriver = new FirefoxDriver();
-        webDriver.get(PersonalAccountPage.mailUrl);
+        webDriver.get(propertiesParser.getSite());
     }
 
     @Test(testName = "Check incoming emails page title")

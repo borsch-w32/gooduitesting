@@ -1,5 +1,10 @@
 package ru.mail.tests;
 
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -12,14 +17,11 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import ru.mail.pages.*;
 import ru.mail.utils.ElementHighlighter;
+import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TakeScreenshotOnFailure;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by cqi on 11.12.15. Educate. Grow. Satan.
@@ -30,8 +32,9 @@ public class EmailOperationsTests
     private WebDriver webDriver;
 
     @BeforeMethod(description = "Open new page")
-    public void setUp() throws MalformedURLException
+    public void setUp() throws MalformedURLException, IOException
     {
+        PropertiesParser propertiesParser = new PropertiesParser();
         // uncomment the lines below to run tests in GRID
         // DesiredCapabilities capability = DesiredCapabilities.firefox();
         // capability.setPlatform(Platform.LINUX);
@@ -41,7 +44,7 @@ public class EmailOperationsTests
         // URL("http://192.168.10.4:4444/wd/hub"), capability);
         // webDriver.get(PersonalAccountPage.mailUrl);
         webDriver = new FirefoxDriver();
-        webDriver.get(PersonalAccountPage.mailUrl);
+        webDriver.get(propertiesParser.getSite());
     }
 
     @Test(testName = "Check last email from drafts", priority = 1)
@@ -56,6 +59,11 @@ public class EmailOperationsTests
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
         clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
         webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.PAGE_DOWN);
+        String winHandleBefore = webDriver.getWindowHandle();
+        for (String winHandle : webDriver.getWindowHandles())
+        {
+            webDriver.switchTo().window(winHandle);
+        }
         WebElement draftsHyperlink = (new WebDriverWait(webDriver, 10))
                 .until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath(".//*[@id='b-nav_folders']//div/a/span[contains(text(), 'Черновики')]")));
