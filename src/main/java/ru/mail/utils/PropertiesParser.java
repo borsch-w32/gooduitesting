@@ -15,36 +15,56 @@ public class PropertiesParser
     String password;
     String emailTo;
     String emailSubject;
+    String addressTo;
+    String subjectTo;
 
-    public String getSite() {
+    public String getAddressTo()
+    {
+        return addressTo;
+    }
+
+    public String getSubjectTo()
+    {
+        return subjectTo;
+    }
+
+    public String getSite()
+    {
         return site;
     }
 
-    public String getLogin() {
+    public String getLogin()
+    {
         return login;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public String getEmailTo() {
+    public String getEmailTo()
+    {
         return emailTo;
     }
 
-    public String getEmailSubject() {
+    public String getEmailSubject()
+    {
         return emailSubject;
     }
 
     public PropertiesParser() throws IOException
     {
         Properties properties = new Properties();
-        FileInputStream propertiesFile = new FileInputStream("D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties");
+        FileInputStream propertiesFile = new FileInputStream(
+                "D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties");
         properties.load(propertiesFile);
         site = properties.getProperty("site");
         login = properties.getProperty("login");
-        login = properties.getProperty("password");
-        login = properties.getProperty("emailTo");
+        password = properties.getProperty("password");
+        emailTo = properties.getProperty("emailTo");
         login = properties.getProperty("emailSubject");
+        addressTo = properties.getProperty("testAddress");
+        subjectTo = properties.getProperty("testSubject");
     }
 }
