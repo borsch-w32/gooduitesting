@@ -1,19 +1,19 @@
 package ru.mail.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import ru.mail.utils.PropertiesParser;
 
 /**
  * Created by cqi on 11.12.15. Educate. Grow. Satan.
  */
 public class PersonalAccountPage extends AbstractPage
 {
-    public static final String mailUrl = "https://www.mail.ru";
-    private static final String log = "borsch.w32";
-    private static final String password = "55tnxadmin";
-
     @FindBy(name = "Login")
     private WebElement login;
 
@@ -29,10 +29,11 @@ public class PersonalAccountPage extends AbstractPage
         PageFactory.initElements(this.webDriver, this);
     }
 
-    public PersonalAccountPage enterData()
+    public PersonalAccountPage enterData() throws IOException
     {
-        login.sendKeys(log);
-        passwd.sendKeys(password);
+        PropertiesParser propertiesParser = new PropertiesParser();
+        login.sendKeys(propertiesParser.getLogin());
+        passwd.sendKeys(propertiesParser.getPassword());
         authButton.click();
         return PageFactory.initElements(webDriver, PersonalAccountPage.class);
     }

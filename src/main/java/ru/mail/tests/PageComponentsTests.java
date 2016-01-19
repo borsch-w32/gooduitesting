@@ -44,7 +44,7 @@ public class PageComponentsTests
     }
 
     @Test(testName = "Check incoming emails page title")
-    public void testTitle()
+    public void testTitle() throws IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
@@ -53,7 +53,7 @@ public class PageComponentsTests
     }
 
     @Test(testName = "Check personal mail hyperlink")
-    public void testHyperLink()
+    public void testHyperLink() throws IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
@@ -64,7 +64,7 @@ public class PageComponentsTests
     }
 
     @Test(testName = "Check title of the create new email page")
-    public void testNewEmailPageTitle() throws InterruptedException
+    public void testNewEmailPageTitle() throws InterruptedException,IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();

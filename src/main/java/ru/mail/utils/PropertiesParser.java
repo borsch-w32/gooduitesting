@@ -57,13 +57,14 @@ public class PropertiesParser
     {
         Properties properties = new Properties();
         FileInputStream propertiesFile = new FileInputStream(
-                "D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties");
+                // "D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties");
+                "/home/cqi/IdeaProjects/gooduitesting/src/main/resources/userdata.properties");
         properties.load(propertiesFile);
         site = properties.getProperty("site");
         login = properties.getProperty("login");
         password = properties.getProperty("password");
         emailTo = properties.getProperty("emailTo");
-        login = properties.getProperty("emailSubject");
+        emailSubject = properties.getProperty("emailSubject");
         addressTo = properties.getProperty("testAddress");
         subjectTo = properties.getProperty("testSubject");
     }
