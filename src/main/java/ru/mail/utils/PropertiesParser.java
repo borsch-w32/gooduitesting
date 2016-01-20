@@ -9,24 +9,11 @@ import java.util.Properties;
  */
 public class PropertiesParser
 {
-
     String site;
     String login;
     String password;
-    String emailTo;
-    String emailSubject;
-    String addressTo;
-    String subjectTo;
-
-    public String getAddressTo()
-    {
-        return addressTo;
-    }
-
-    public String getSubjectTo()
-    {
-        return subjectTo;
-    }
+    String testAddress;
+    String testSubject;
 
     public String getSite()
     {
@@ -43,14 +30,14 @@ public class PropertiesParser
         return password;
     }
 
-    public String getEmailTo()
+    public String getTestAddress()
     {
-        return emailTo;
+        return testAddress;
     }
 
-    public String getEmailSubject()
+    public String getTestSubject()
     {
-        return emailSubject;
+        return testSubject;
     }
 
     public PropertiesParser() throws IOException
@@ -63,9 +50,7 @@ public class PropertiesParser
         site = properties.getProperty("site");
         login = properties.getProperty("login");
         password = properties.getProperty("password");
-        emailTo = properties.getProperty("emailTo");
-        emailSubject = properties.getProperty("emailSubject");
-        addressTo = properties.getProperty("testAddress");
-        subjectTo = properties.getProperty("testSubject");
+        testAddress = properties.getProperty("testAddress");
+        testSubject = properties.getProperty("testSubject");
     }
 }
