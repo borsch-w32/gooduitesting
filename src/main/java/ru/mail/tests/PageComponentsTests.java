@@ -94,7 +94,7 @@ public class PageComponentsTests
         }
         catch (Exception e)
         {
-            System.out.println("Error occured while closing WebDriver");
+            System.out.println("Error occurred while closing WebDriver");
         }
         finally
         {
