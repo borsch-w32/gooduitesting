@@ -1,5 +1,10 @@
 package ru.mail.tests;
 
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -12,15 +17,11 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import ru.mail.pages.*;
 import ru.mail.utils.ElementHighlighter;
 import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TakeScreenshotOnFailure;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by cqi on 11.12.15. Educate. Grow. Satan.
@@ -109,12 +110,17 @@ public class EmailOperationsTests
     @AfterMethod(description = "Close FF Instance")
     public void tearDown()
     {
-        try {
+        try
+        {
             webDriver.close();
             webDriver.quit();
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             System.out.println("Error occured while closing WebDriver");
-        }finally {
+        }
+        finally
+        {
             webDriver = null;
         }
     }

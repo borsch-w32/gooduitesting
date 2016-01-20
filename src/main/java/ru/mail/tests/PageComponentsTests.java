@@ -65,7 +65,7 @@ public class PageComponentsTests
     }
 
     @Test(testName = "Check title of the create new email page")
-    public void testNewEmailPageTitle() throws InterruptedException,IOException
+    public void testNewEmailPageTitle() throws InterruptedException, IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
@@ -87,12 +87,17 @@ public class PageComponentsTests
     @AfterMethod(description = "Close FF Instance")
     public void tearDown()
     {
-        try {
+        try
+        {
             webDriver.close();
             webDriver.quit();
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             System.out.println("Error occured while closing WebDriver");
-        }finally {
+        }
+        finally
+        {
             webDriver = null;
         }
     }
