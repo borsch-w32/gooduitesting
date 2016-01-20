@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 public class AbstractPage
 {
     protected WebDriver webDriver;
+
     protected AbstractPage(WebDriver webDriver)
     {
         this.webDriver = webDriver;

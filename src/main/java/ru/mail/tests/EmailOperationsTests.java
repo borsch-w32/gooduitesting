@@ -1,10 +1,5 @@
 package ru.mail.tests;
 
-import static org.testng.Assert.assertEquals;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -17,11 +12,16 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import ru.mail.pages.*;
 import ru.mail.utils.ElementHighlighter;
 import ru.mail.utils.PropertiesParser;
+import ru.mail.utils.TabSwitcher;
 import ru.mail.utils.TakeScreenshotOnFailure;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by cqi on 11.12.15. Educate. Grow. Satan.
@@ -51,6 +51,7 @@ public class EmailOperationsTests
     @Test(testName = "Check last email from drafts", priority = 1)
     public void testLastEmailInDrafts() throws InterruptedException, IOException
     {
+        PropertiesParser propertiesParser = new PropertiesParser();
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
@@ -60,19 +61,18 @@ public class EmailOperationsTests
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
         clickDrafts.moveToElement(emailDraftsPage.drafts).click().build().perform();
         webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.PAGE_DOWN);
-        String winHandleBefore = webDriver.getWindowHandle();
-        for (String winHandle : webDriver.getWindowHandles())
-        {
-            webDriver.switchTo().window(winHandle);
-        }
+        TabSwitcher tabSwitcher = new TabSwitcher(webDriver);
+        tabSwitcher.tabsSwitcher();
         WebElement draftsHyperlink = (new WebDriverWait(webDriver, 10))
                 .until(ExpectedConditions.visibilityOfElementLocated(
                         By.xpath(".//*[@id='b-nav_folders']//div/a/span[contains(text(), 'Черновики')]")));
         emailDraftsPage.lastEmail.click();
+        webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.PAGE_DOWN);
+        tabSwitcher.tabsSwitcher();
         String actualDeliverTo = emailDraftsPage.emailRecepient.getText();
         String actualSubject = emailDraftsPage.emailSubject.getAttribute("value");
-        assertEquals(actualDeliverTo, "cqi90@mail.ru");
-        assertEquals(actualSubject, "Test me if you can");
+        assertEquals(actualDeliverTo, propertiesParser.getTestAddress());
+        assertEquals(actualSubject, propertiesParser.getTestSubject());
         emailDraftsPage.send.click();
     }
 

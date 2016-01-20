@@ -1,9 +1,5 @@
 package ru.mail.tests;
 
-import static org.testng.Assert.assertEquals;
-
-import java.io.IOException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,11 +10,14 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import ru.mail.pages.ComposeEmailPage;
 import ru.mail.pages.PersonalAccountPage;
 import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TakeScreenshotOnFailure;
+
+import java.io.IOException;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Sergei_Sergeenko on 12/24/2015.
