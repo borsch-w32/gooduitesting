@@ -41,6 +41,7 @@ public class PageComponentsTests
         // webDriver.get(PersonalAccountPage.mailUrl);
         webDriver = new FirefoxDriver();
         webDriver.get(propertiesParser.getSite());
+        webDriver.manage().window().maximize();
     }
 
     @Test(testName = "Check incoming emails page title")
@@ -86,6 +87,13 @@ public class PageComponentsTests
     @AfterMethod(description = "Close FF Instance")
     public void tearDown()
     {
-        webDriver.quit();
+        try {
+            webDriver.close();
+            webDriver.quit();
+        }catch (Exception e){
+            System.out.println("Error occured while closing WebDriver");
+        }finally {
+            webDriver = null;
+        }
     }
 }
