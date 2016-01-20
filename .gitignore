@@ -33,3 +33,5 @@ nb-configuration.xml
 *.drf
 vf.gf.dmn-events.txt
 vf.gf.dmn-license.cfg
+test-output
+
