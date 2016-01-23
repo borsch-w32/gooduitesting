@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.mail.pages.*;
+import ru.mail.patterns.WebDriverSingleton;
 import ru.mail.utils.ElementHighlighter;
 import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TabSwitcher;
@@ -43,7 +43,8 @@ public class EmailOperationsTests
         // webDriver = new RemoteWebDriver(new
         // URL("http://192.168.10.4:4444/wd/hub"), capability);
         // webDriver.get(PersonalAccountPage.mailUrl);
-        webDriver = new FirefoxDriver();
+//        webDriver = new FirefoxDriver();
+        webDriver = WebDriverSingleton.getWebDriverInstance();
         webDriver.get(propertiesParser.getSite());
         webDriver.manage().window().maximize();
     }
