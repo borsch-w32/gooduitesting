@@ -1,12 +1,13 @@
 package ru.mail.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import ru.mail.utils.PropertiesParser;
 
-import java.io.IOException;
+import ru.mail.utils.PropertiesParser;
 
 /**
  * Created by cqi on 11.12.15. Educate. Grow. Satan.
