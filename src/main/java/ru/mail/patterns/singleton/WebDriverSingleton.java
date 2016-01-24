@@ -10,7 +10,6 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
  */
 public class WebDriverSingleton
 {
-
     private static WebDriver webDriver;
 
     private WebDriverSingleton()
@@ -22,8 +21,8 @@ public class WebDriverSingleton
         if (null == webDriver)
         {
             ProfilesIni profile = new ProfilesIni();
-            FirefoxProfile myprofile = profile.getProfile("uitesting");
-            webDriver = new FirefoxDriver(myprofile);
+            FirefoxProfile customFFProfile = profile.getProfile("uitesting");
+            webDriver = new FirefoxDriver(customFFProfile);
         }
         return webDriver;
     }
