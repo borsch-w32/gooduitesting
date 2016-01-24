@@ -4,23 +4,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.mail.pages.*;
+import ru.mail.patterns.singleton.WebDriverSingleton;
 import ru.mail.utils.ElementHighlighter;
 import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TabSwitcher;
 import ru.mail.utils.TakeScreenshotOnFailure;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import static org.testng.Assert.assertEquals;
 
@@ -33,7 +31,7 @@ public class EmailOperationsTests
     private WebDriver webDriver;
 
     @BeforeMethod(description = "Open new page")
-    public void setUp() throws MalformedURLException, IOException
+    public void setUp() throws IOException
     {
         PropertiesParser propertiesParser = new PropertiesParser();
         // uncomment the lines below to run tests in GRID
@@ -44,7 +42,8 @@ public class EmailOperationsTests
         // webDriver = new RemoteWebDriver(new
         // URL("http://192.168.10.4:4444/wd/hub"), capability);
         // webDriver.get(PersonalAccountPage.mailUrl);
-        webDriver = new FirefoxDriver();
+//        webDriver = new FirefoxDriver();
+        webDriver  = WebDriverSingleton.getWebDriverInstance();
         webDriver.get(propertiesParser.getSite());
         webDriver.manage().window().maximize();
     }
@@ -108,7 +107,7 @@ public class EmailOperationsTests
         }
     }
 
-    @AfterSuite(description = "Close FF Instance")
+    @AfterMethod(description = "Close FF Instance")
     public void tearDown()
     {
         try
