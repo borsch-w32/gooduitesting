@@ -42,20 +42,31 @@ public class PropertiesParser
         return testSubject;
     }
 
-    public String getScreenshotWindowsPath() {
+    public String getScreenshotWindowsPath()
+    {
         return screenshotWindowsPath;
     }
 
-    public String getScreenshotUbuntuPath() {
+    public String getScreenshotUbuntuPath()
+    {
         return screenshotUbuntuPath;
     }
 
     public PropertiesParser() throws IOException
     {
+        final String windowsPropertiesPath = "D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties";
+        final String linuxPropertiesPath = "/home/cqi/IdeaProjects/gooduitesting/src/main/resources/userdata.properties";
+        String path = null;
         Properties properties = new Properties();
-        FileInputStream propertiesFile = new FileInputStream(
-//                "D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties");
-                "/home/cqi/IdeaProjects/gooduitesting/src/main/resources/userdata.properties");
+        if (OsTypeChecker.isUnix())
+        {
+            path = linuxPropertiesPath;
+        }
+        else if (OsTypeChecker.isWindows())
+        {
+            path = windowsPropertiesPath;
+        }
+        FileInputStream propertiesFile = new FileInputStream(path);
         properties.load(propertiesFile);
         site = properties.getProperty("site");
         login = properties.getProperty("login");

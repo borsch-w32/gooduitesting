@@ -23,12 +23,11 @@ public class TakeScreenshotOnFailure extends AbstractPage
     {
         PropertiesParser propertiesParser = new PropertiesParser();
         String screenshotPath = null;
-        OsType osType = new OsType();
-        if (osType.isUnix())
+        if (OsTypeChecker.isUnix())
         {
             screenshotPath = propertiesParser.getScreenshotUbuntuPath();
         }
-        else if(osType.isWindows())
+        else if (OsTypeChecker.isWindows())
         {
             screenshotPath = propertiesParser.getScreenshotWindowsPath();
         }
