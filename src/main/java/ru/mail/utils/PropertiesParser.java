@@ -14,6 +14,8 @@ public class PropertiesParser
     String password;
     String testAddress;
     String testSubject;
+    String screenshotWindowsPath;
+    String screenshotUbuntuPath;
 
     public String getSite()
     {
@@ -40,6 +42,14 @@ public class PropertiesParser
         return testSubject;
     }
 
+    public String getScreenshotWindowsPath() {
+        return screenshotWindowsPath;
+    }
+
+    public String getScreenshotUbuntuPath() {
+        return screenshotUbuntuPath;
+    }
+
     public PropertiesParser() throws IOException
     {
         Properties properties = new Properties();
@@ -52,5 +62,7 @@ public class PropertiesParser
         password = properties.getProperty("password");
         testAddress = properties.getProperty("testAddress");
         testSubject = properties.getProperty("testSubject");
+        screenshotWindowsPath = properties.getProperty("screenshot.windows.path");
+        screenshotUbuntuPath = properties.getProperty("screenshot.ubuntu.path");
     }
 }
