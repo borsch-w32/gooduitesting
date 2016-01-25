@@ -4,7 +4,7 @@ package ru.mail.utils;
  * Created by cqi on 25.1.16.
  * Educate. Grow. Satan.
  */
-public class OsType
+public class OsTypeChecker
 {
     private static String OS = null;
     public static String getOsName()
