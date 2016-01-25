@@ -22,7 +22,18 @@ public class TakeScreenshotOnFailure extends AbstractPage
     public static void takeScreenshot(WebDriver webDriver) throws IOException
     {
         PropertiesParser propertiesParser = new PropertiesParser();
+        String screenshotPath = null;
+        OsType osType = new OsType();
+        if (osType.isUnix())
+        {
+            screenshotPath = propertiesParser.getScreenshotUbuntuPath();
+        }
+        else if(osType.isWindows())
+        {
+            screenshotPath = propertiesParser.getScreenshotWindowsPath();
+        }
+
         File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File(propertiesParser.getScreenshotUbuntuPath()), true);
+        FileUtils.copyFile(scrFile, new File(screenshotPath), true);
     }
 }
