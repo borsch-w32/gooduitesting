@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 
 import ru.mail.pages.ComposeEmailPage;
 import ru.mail.pages.PersonalAccountPage;
+import ru.mail.patterns.singleton.WebDriverSingleton;
 import ru.mail.utils.PropertiesParser;
 import ru.mail.utils.TakeScreenshotOnFailure;
 
@@ -87,18 +88,7 @@ public class PageComponentsTests
     @AfterMethod(description = "Close FF Instance")
     public void tearDown()
     {
-        try
-        {
-            webDriver.close();
-            webDriver.quit();
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error occurred while closing WebDriver");
-        }
-        finally
-        {
-            webDriver = null;
-        }
+        WebDriverSingleton webDriverSingleton = new WebDriverSingleton();
+        webDriverSingleton.tearDown();
     }
 }
