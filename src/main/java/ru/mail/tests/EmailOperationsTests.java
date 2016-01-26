@@ -42,8 +42,7 @@ public class EmailOperationsTests
         // capability.setVersion("43.0");
         // webDriver = new RemoteWebDriver(new
         // URL("http://192.168.10.4:4444/wd/hub"), capability);
-        // webDriver.get(PersonalAccountPage.mailUrl);
-        // webDriver = new FirefoxDriver();
+        // webDriver.get(propertiesParser.getSite());
         webDriver = WebDriverSingleton.getWebDriverInstance();
         webDriver.get(propertiesParser.getSite());
         webDriver.manage().window().maximize();
