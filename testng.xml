@@ -5,6 +5,8 @@
         <classes>
             <class name="ru.mail.tests.EmailOperationsTests"/>
             <class name="ru.mail.tests.PageComponentsTests"/>
+            <class name="ru.mail.tests.EmailTestsUsingFactoryMethod"/>
+            <class name="ru.mail.tests.EmailTestsUsingDecorator"/>
         </classes>
     </test>
 </suite>
