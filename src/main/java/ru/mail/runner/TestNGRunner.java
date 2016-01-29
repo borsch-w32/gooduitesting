@@ -23,6 +23,8 @@ public class TestNGRunner
         List<XmlClass> classes = new ArrayList<XmlClass>();
         classes.add(new XmlClass("ru.mail.tests.EmailOperationsTests"));
         classes.add(new XmlClass("ru.mail.tests.PageComponentsTests"));
+        classes.add(new XmlClass("ru.mail.tests.EmailTestsUsingFactoryMethod"));
+        classes.add(new XmlClass("ru.mail.tests.EmailTestsUsingDecorator"));
         test.setXmlClasses(classes);
 
         List<XmlSuite> suites = new ArrayList<XmlSuite>();
