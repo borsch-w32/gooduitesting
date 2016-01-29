@@ -17,7 +17,7 @@ import ru.mail.utils.PropertiesParser;
 /**
  * Created by Sergei_Sergeenko on 1/29/2016.
  */
-public class EmailTestsUsingPatterns
+public class EmailTestsUsingFactoryMethod
 {
     @Test(testName = "Chrome - test mail.ru main page logo is displayed")
     public void testMainPageLogoChrome() throws IOException
