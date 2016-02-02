@@ -21,18 +21,7 @@ public class TakeScreenshotOnFailure extends AbstractPage
 
     public static void takeScreenshot(WebDriver webDriver) throws IOException
     {
-        PropertiesParser propertiesParser = new PropertiesParser();
-        String screenshotPath = null;
-        if (OsTypeChecker.isUnix())
-        {
-            screenshotPath = propertiesParser.getScreenshotUbuntuPath();
-        }
-        else if (OsTypeChecker.isWindows())
-        {
-            screenshotPath = propertiesParser.getScreenshotWindowsPath();
-        }
-
         File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File(screenshotPath), true);
+        FileUtils.copyFileToDirectory(scrFile, new File(new PropertiesParser().getScreenshotPath()), true);
     }
 }

@@ -1,5 +1,6 @@
 package ru.mail.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -14,8 +15,8 @@ public class PropertiesParser
     String password;
     String testAddress;
     String testSubject;
-    String screenshotWindowsPath;
-    String screenshotUbuntuPath;
+
+    String screenshotPath;
 
     public String getSite()
     {
@@ -42,38 +43,20 @@ public class PropertiesParser
         return testSubject;
     }
 
-    public String getScreenshotWindowsPath()
+    public String getScreenshotPath()
     {
-        return screenshotWindowsPath;
-    }
-
-    public String getScreenshotUbuntuPath()
-    {
-        return screenshotUbuntuPath;
+        return screenshotPath;
     }
 
     public PropertiesParser() throws IOException
     {
-        final String windowsPropertiesPath = "D:\\git\\gooduitesting\\src\\main\\resources\\userdata.properties";
-        final String linuxPropertiesPath = "/home/cqi/IdeaProjects/gooduitesting/src/main/resources/userdata.properties";
-        String path = null;
         Properties properties = new Properties();
-        if (OsTypeChecker.isUnix())
-        {
-            path = linuxPropertiesPath;
-        }
-        else if (OsTypeChecker.isWindows())
-        {
-            path = windowsPropertiesPath;
-        }
-        FileInputStream propertiesFile = new FileInputStream(path);
-        properties.load(propertiesFile);
+        properties.load(new FileInputStream(new File("src/main/resources/userdata.properties")));
         site = properties.getProperty("site");
         login = properties.getProperty("login");
         password = properties.getProperty("password");
         testAddress = properties.getProperty("testAddress");
         testSubject = properties.getProperty("testSubject");
-        screenshotWindowsPath = properties.getProperty("screenshot.windows.path");
-        screenshotUbuntuPath = properties.getProperty("screenshot.ubuntu.path");
+        screenshotPath = properties.getProperty("screenshot.path");
     }
 }
