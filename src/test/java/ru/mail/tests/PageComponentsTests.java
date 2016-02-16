@@ -4,6 +4,8 @@ import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +29,8 @@ public class PageComponentsTests
 {
     private WebDriver webDriver;
 
+    private static final Logger logger = LogManager.getLogger(PageComponentsTests.class);
+
     @BeforeMethod(description = "Open new page")
     public void setUp() throws IOException
     {
@@ -49,6 +53,7 @@ public class PageComponentsTests
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
         personalAccountPage.enterData();
+        logger.warn("Test");
         String title = webDriver.getTitle();
         assertEquals(title, "Входящие - borsch.w32@mail.ru - Почта Mail.Ru");
     }
