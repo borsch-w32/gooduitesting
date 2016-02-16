@@ -37,8 +37,7 @@ public class EmailTestsUsingDecorator
     @Test(testName = "Check personal mail hyperlink")
     public void testHyperLink() throws IOException
     {
-        PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-        personalAccountPage = new DecoratorPattern(webDriver);
+        PersonalAccountPage personalAccountPage = new DecoratorPattern(webDriver);
         personalAccountPage.enterData();
         WebElement userEmailHyperlink = (new WebDriverWait(webDriver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("PH_user-email")));
