@@ -4,6 +4,8 @@ import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -31,6 +33,8 @@ public class EmailOperationsTests
 {
     private WebDriver webDriver;
 
+    private static final Logger logger = LogManager.getLogger(EmailOperationsTests.class);
+
     @BeforeMethod(description = "Open new page")
     public void setUp() throws IOException
     {
@@ -53,9 +57,9 @@ public class EmailOperationsTests
     {
         PropertiesParser propertiesParser = new PropertiesParser();
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-        personalAccountPage.enterData();
+        logger.info(personalAccountPage.enterData());
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
-        composeEmailPage.fillInEmailAndSave();
+        logger.debug(composeEmailPage.fillInEmailAndSave());
         EmailDraftsPage emailDraftsPage = new EmailDraftsPage(webDriver);
         Actions clickDrafts = new Actions(webDriver);
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
@@ -103,6 +107,7 @@ public class EmailOperationsTests
     {
         if (testResult.getStatus() == ITestResult.FAILURE)
         {
+            logger.error("Error occured!");
             TakeScreenshotOnFailure.takeScreenshot(webDriver);
         }
     }
