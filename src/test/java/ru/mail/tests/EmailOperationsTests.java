@@ -57,9 +57,10 @@ public class EmailOperationsTests
     {
         PropertiesParser propertiesParser = new PropertiesParser();
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
-        logger.info(personalAccountPage.enterData());
+        logger.info("Entering user's personal data");
+        personalAccountPage.enterData();
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
-        logger.debug(composeEmailPage.fillInEmailAndSave());
+        composeEmailPage.fillInEmailAndSave();
         EmailDraftsPage emailDraftsPage = new EmailDraftsPage(webDriver);
         Actions clickDrafts = new Actions(webDriver);
         ElementHighlighter.highlightElem(webDriver, emailDraftsPage.drafts);
@@ -84,6 +85,7 @@ public class EmailOperationsTests
     public void testSentEmailsFolder() throws IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
+        logger.info("Entering user's personal data");
         personalAccountPage.enterData();
         SentEmailsPage sentEmailsPage = new SentEmailsPage(webDriver);
         sentEmailsPage.sent.click();
@@ -94,6 +96,7 @@ public class EmailOperationsTests
     public void logOffFromAccount() throws IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
+        logger.info("Entering user's personal data");
         personalAccountPage.enterData();
         WebElement logOffHyperLink = (new WebDriverWait(webDriver, 10)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='PH_logoutLink'][@title='выход']")));
@@ -117,5 +120,6 @@ public class EmailOperationsTests
     {
         WebDriverSingleton webDriverSingleton = new WebDriverSingleton();
         webDriverSingleton.tearDown();
+        logger.info("Firefox was killed");
     }
 }

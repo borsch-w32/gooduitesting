@@ -61,6 +61,7 @@ public class PageComponentsTests
     public void testHyperLink() throws IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
+        logger.info("Entering user's personal data");
         personalAccountPage.enterData();
         WebElement userEmailHyperlink = (new WebDriverWait(webDriver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("PH_user-email")));
@@ -72,6 +73,7 @@ public class PageComponentsTests
     public void testNewEmailPageTitle() throws InterruptedException, IOException
     {
         PersonalAccountPage personalAccountPage = new PersonalAccountPage(webDriver);
+        logger.info("Entering user's personal data");
         personalAccountPage.enterData();
         ComposeEmailPage composeEmailPage = new ComposeEmailPage(webDriver);
         composeEmailPage.fillInEmailAndSave();
@@ -94,5 +96,6 @@ public class PageComponentsTests
     {
         WebDriverSingleton webDriverSingleton = new WebDriverSingleton();
         webDriverSingleton.tearDown();
+        logger.info("Firefox was killed");
     }
 }

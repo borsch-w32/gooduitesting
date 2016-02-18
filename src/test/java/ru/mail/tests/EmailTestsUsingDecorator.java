@@ -44,6 +44,7 @@ public class EmailTestsUsingDecorator
     public void testHyperLink() throws IOException
     {
         PersonalAccountPage personalAccountPage = new DecoratorPattern(webDriver);
+        logger.info("Entering user's personal data");
         personalAccountPage.enterData();
         WebElement userEmailHyperlink = (new WebDriverWait(webDriver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("PH_user-email")));
@@ -66,5 +67,6 @@ public class EmailTestsUsingDecorator
     {
         WebDriverSingleton webDriverSingleton = new WebDriverSingleton();
         webDriverSingleton.tearDown();
+        logger.info("Firefox was killed");
     }
 }

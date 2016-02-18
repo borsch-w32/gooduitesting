@@ -4,6 +4,8 @@ import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +21,8 @@ import ru.mail.utils.PropertiesParser;
  */
 public class EmailTestsUsingFactoryMethod
 {
+    private static final Logger logger = LogManager.getLogger(EmailTestsUsingFactoryMethod.class);
+
     @Test(testName = "Chrome - test mail.ru main page logo is displayed")
     public void testMainPageLogoChrome() throws IOException
     {
@@ -31,6 +35,7 @@ public class EmailTestsUsingFactoryMethod
         assertEquals(true, logo.isDisplayed());
         webDriver.close();
         webDriver.quit();
+        logger.info("Chrome was killed");
     }
 
     @Test(testName = "Firefox - test mail.ru main page logo is displayed")
@@ -45,5 +50,6 @@ public class EmailTestsUsingFactoryMethod
         assertEquals(true, logo.isDisplayed());
         webDriver.close();
         webDriver.quit();
+        logger.info("Firefox was killed");
     }
 }
