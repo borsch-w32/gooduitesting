@@ -10,7 +10,7 @@ public class WebDriverSingleton
 {
     public static WebDriver webDriver;
 
-    public WebDriverSingleton()
+    private WebDriverSingleton()
     {
     }
 
